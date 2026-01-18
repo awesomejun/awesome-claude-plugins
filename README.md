@@ -85,10 +85,10 @@ Each progress bar uses a unique 4-stage gradient that changes color based on usa
 | Icon | Information | Modes |
 |------|-------------|-------|
 | 🤖 | Model name (Opus/Sonnet/Haiku) | All |
-| 🎨 | Output style | Default, Full |
+| 🎨 | Output style (default, explanatory, learning, ...) | Default, Full |
 | ✅/📝 | Git status (clean/dirty) | All |
 | ↑/↓ | Git ahead/behind upstream | Full |
-| 🐍 | Conda environment | Default, Full |
+| 🐍 | Conda environment | Full |
 | 📂 | Current directory path | All |
 | 🌿 | Git branch | All |
 | 💰 | Session cost | Full |

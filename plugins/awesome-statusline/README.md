@@ -88,7 +88,7 @@ claude
 | Lines | 2 | 2 | 5 |
 | Bar Width | 10 blocks | 10 blocks | 40 blocks |
 | Model | Short (Opus) | Full (Claude Opus 4.5) | Full |
-| Output Style | ❌ | ✅ | ✅ |
+| Output Style | ❌ | ✅ (default, explanatory, learning, ...) | ✅ |
 | Git Status | Icon only | Icon only | Detailed (+N !N ?N) |
 | Git ↑↓ (ahead/behind) | ❌ | ❌ | ✅ |
 | Conda Env | ❌ | ❌ | ✅ |
