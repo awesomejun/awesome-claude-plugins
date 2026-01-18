@@ -4,9 +4,9 @@
 # ============================================================================
 # Line 1: 🤖 Model | ✅ Git | 🐍 Env | 🎨 Style
 # Line 2: 📂 full path 🌿(branch) | 💰 cost | ⏰ duration
-# Line 3: 🧠 Context bar 20 blocks % used (tokens)
-# Line 4: 🚀 Usage 5H bar 20 blocks % (Reset time)
-# Line 5: ⭐ Usage 7D bar 20 blocks % (Reset day time)
+# Line 3: 🧠 Context bar 40 blocks % used (tokens) - Pink→Yellow→Red
+# Line 4: 🚀 Usage 5H bar 40 blocks % (Reset time) - Lavender→Blue→Red
+# Line 5: ⭐ Usage 7D bar 40 blocks % (Reset day time) - Yellow→Teal→Red
 # % numbers use gradient end color + Bold
 # ============================================================================
 
@@ -42,20 +42,25 @@ latte_yellow() { echo -e "\033[38;2;223;142;29m"; }
 # ============================================================================
 # Gradient Functions
 # ============================================================================
+# Context gradient: Mocha Pink(0%) → Latte Yellow(40%) → Latte Red(80-100%)
 get_context_gradient_color() {
     local pct=$1
     local r g b
-    if [[ $pct -lt 30 ]]; then
-        local t=$((pct * 100 / 30))
-        r=$((245 + (230 - 245) * t / 100))
-        g=$((194 + (69 - 194) * t / 100))
-        b=$((231 + (83 - 231) * t / 100))
-    elif [[ $pct -lt 70 ]]; then
-        local t=$(((pct - 30) * 100 / 40))
-        r=$((230 + (210 - 230) * t / 100))
-        g=$((69 + (15 - 69) * t / 100))
-        b=$((83 + (57 - 83) * t / 100))
+
+    if [[ $pct -lt 40 ]]; then
+        # Mocha Pink (#f5c2e7) → Latte Yellow (#df8e1d)
+        local t=$((pct * 100 / 40))
+        r=$((245 + (223 - 245) * t / 100))
+        g=$((194 + (142 - 194) * t / 100))
+        b=$((231 + (29 - 231) * t / 100))
+    elif [[ $pct -lt 80 ]]; then
+        # Latte Yellow (#df8e1d) → Latte Red (#d20f39)
+        local t=$(((pct - 40) * 100 / 40))
+        r=$((223 + (210 - 223) * t / 100))
+        g=$((142 + (15 - 142) * t / 100))
+        b=$((29 + (57 - 29) * t / 100))
     else
+        # Latte Red (#d20f39) - hold at 80-100%
         r=210; g=15; b=57
     fi
     echo "$r;$g;$b"
@@ -79,20 +84,22 @@ get_usage_gradient_color() {
     echo "$r;$g;$b"
 }
 
-# 7D: Mocha Yellow → Latte Peach → Latte Red
+# 7D: Mocha Yellow → Latte Teal → Latte Red
 get_usage_7d_gradient_color() {
     local pct=$1
     local r g b
     if [[ $pct -lt 50 ]]; then
+        # Mocha Yellow (#f9e2af) → Latte Teal (#179299)
         local t=$((pct * 2))
-        r=$((249 + (254 - 249) * t / 100))
-        g=$((226 + (100 - 226) * t / 100))
-        b=$((175 + (11 - 175) * t / 100))
+        r=$((249 + (23 - 249) * t / 100))
+        g=$((226 + (146 - 226) * t / 100))
+        b=$((175 + (153 - 175) * t / 100))
     else
+        # Latte Teal (#179299) → Latte Red (#d20f39)
         local t=$(((pct - 50) * 2))
-        r=$((254 + (210 - 254) * t / 100))
-        g=$((100 + (15 - 100) * t / 100))
-        b=$((11 + (57 - 11) * t / 100))
+        r=$((23 + (210 - 23) * t / 100))
+        g=$((146 + (15 - 146) * t / 100))
+        b=$((153 + (57 - 153) * t / 100))
     fi
     echo "$r;$g;$b"
 }
@@ -232,7 +239,7 @@ fi
 TOKENS_K=$((CURRENT_TOKENS / 1000))
 CONTEXT_K=$((CONTEXT_SIZE / 1000))
 
-CTX_BAR=$(generate_bar "$CONTEXT_PERCENT" 20 "context")
+CTX_BAR=$(generate_bar "$CONTEXT_PERCENT" 40 "context")
 CTX_END_COLOR=$(get_context_gradient_color "$CONTEXT_PERCENT")
 LINE3="🧠 $(cat_pink)Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
 
@@ -302,8 +309,8 @@ if [[ -n "$USAGE_DATA" ]]; then
     FIVE_RESET_FMT=$(format_time_remaining "$FIVE_RESET")
     SEVEN_RESET_FMT=$(format_reset_datetime "$SEVEN_RESET")
 
-    FIVE_BAR=$(generate_bar "$FIVE_HOUR" 20 "5h")
-    SEVEN_BAR=$(generate_bar "$SEVEN_DAY" 20 "7d")
+    FIVE_BAR=$(generate_bar "$FIVE_HOUR" 40 "5h")
+    SEVEN_BAR=$(generate_bar "$SEVEN_DAY" 40 "7d")
 
     FIVE_END_COLOR=$(get_usage_gradient_color "$FIVE_HOUR")
     SEVEN_END_COLOR=$(get_usage_7d_gradient_color "$SEVEN_DAY")
