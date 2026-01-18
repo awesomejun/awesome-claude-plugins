@@ -4,10 +4,10 @@
 # ============================================================================
 # Line 1: 🤖 Model | ✅ Git | 🐍 Env | 🎨 Style
 # Line 2: 📂 full path 🌿(branch) | 💰 cost | ⏰ duration
-# Line 3: 🧠 Context bar 40 blocks % used (tokens) - Pink→Yellow→Red
-# Line 4: 🚀 Usage 5H bar 40 blocks % (Reset time) - Lavender→Blue→Red
-# Line 5: ⭐ Usage 7D bar 40 blocks % (Reset day time) - Yellow→Teal→Red
-# % numbers use gradient end color + Bold
+# Line 3: 🧠 Context bar 40 blocks - MochaMaroon→LatteMaroon(40%)→Red(80-100%)
+# Line 4: 🚀 5H Limit bar 40 blocks - Lavender→Lavender(40%)→Blue(80%)→Red(100%)
+# Line 5: ⭐ 7D Limit bar 40 blocks - Yellow→Yellow(40%)→Green(80%)→Red(100%)
+# 5H Reset: "(Resets in 2h15m)" | 7D Reset: "(Resets Jan 21 at 2pm)"
 # ============================================================================
 
 input=$(cat)
@@ -38,27 +38,32 @@ cat_overlay() { echo -e "\033[38;2;108;112;134m"; }
 latte_green() { echo -e "\033[38;2;64;160;43m"; }
 latte_red() { echo -e "\033[38;2;210;15;57m"; }
 latte_yellow() { echo -e "\033[38;2;223;142;29m"; }
+latte_pink() { echo -e "\033[38;2;234;118;203m"; }
+latte_maroon() { echo -e "\033[38;2;230;69;83m"; }
+latte_sky() { echo -e "\033[38;2;4;165;229m"; }
+latte_blue() { echo -e "\033[38;2;30;102;245m"; }
+mocha_maroon() { echo -e "\033[38;2;235;160;172m"; }
 
 # ============================================================================
 # Gradient Functions
 # ============================================================================
-# Context gradient: Mocha Pink(0%) → Latte Yellow(40%) → Latte Red(80-100%)
+# Context gradient: Mocha Maroon(0%) → Latte Maroon(40%) → Latte Red(80-100%)
 get_context_gradient_color() {
     local pct=$1
     local r g b
 
     if [[ $pct -lt 40 ]]; then
-        # Mocha Pink (#f5c2e7) → Latte Yellow (#df8e1d)
+        # Mocha Maroon (#eba0ac) → Latte Maroon (#e64553)
         local t=$((pct * 100 / 40))
-        r=$((245 + (223 - 245) * t / 100))
-        g=$((194 + (142 - 194) * t / 100))
-        b=$((231 + (29 - 231) * t / 100))
+        r=$((235 + (230 - 235) * t / 100))
+        g=$((160 + (69 - 160) * t / 100))
+        b=$((172 + (83 - 172) * t / 100))
     elif [[ $pct -lt 80 ]]; then
-        # Latte Yellow (#df8e1d) → Latte Red (#d20f39)
+        # Latte Maroon (#e64553) → Latte Red (#d20f39)
         local t=$(((pct - 40) * 100 / 40))
-        r=$((223 + (210 - 223) * t / 100))
-        g=$((142 + (15 - 142) * t / 100))
-        b=$((29 + (57 - 29) * t / 100))
+        r=$((230 + (210 - 230) * t / 100))
+        g=$((69 + (15 - 69) * t / 100))
+        b=$((83 + (57 - 83) * t / 100))
     else
         # Latte Red (#d20f39) - hold at 80-100%
         r=210; g=15; b=57
@@ -66,17 +71,25 @@ get_context_gradient_color() {
     echo "$r;$g;$b"
 }
 
-# 5H: Mocha Lavender → Latte Blue → Latte Red
+# 5H: Mocha Lavender(0%) → Latte Lavender(40%) → Latte Blue(80%) → Latte Red(100%)
 get_usage_gradient_color() {
     local pct=$1
     local r g b
-    if [[ $pct -lt 50 ]]; then
-        local t=$((pct * 2))
-        r=$((180 + (30 - 180) * t / 100))
-        g=$((190 + (102 - 190) * t / 100))
-        b=$((254 + (245 - 254) * t / 100))
+    if [[ $pct -lt 40 ]]; then
+        # Mocha Lavender (#b4befe) → Latte Lavender (#7287fd)
+        local t=$((pct * 100 / 40))
+        r=$((180 + (114 - 180) * t / 100))
+        g=$((190 + (135 - 190) * t / 100))
+        b=$((254 + (253 - 254) * t / 100))
+    elif [[ $pct -lt 80 ]]; then
+        # Latte Lavender (#7287fd) → Latte Blue (#1e66f5)
+        local t=$(((pct - 40) * 100 / 40))
+        r=$((114 + (30 - 114) * t / 100))
+        g=$((135 + (102 - 135) * t / 100))
+        b=$((253 + (245 - 253) * t / 100))
     else
-        local t=$(((pct - 50) * 2))
+        # Latte Blue (#1e66f5) → Latte Red (#d20f39)
+        local t=$(((pct - 80) * 100 / 20))
         r=$((30 + (210 - 30) * t / 100))
         g=$((102 + (15 - 102) * t / 100))
         b=$((245 + (57 - 245) * t / 100))
@@ -84,22 +97,28 @@ get_usage_gradient_color() {
     echo "$r;$g;$b"
 }
 
-# 7D: Mocha Yellow → Latte Teal → Latte Red
+# 7D: Mocha Yellow(0%) → Latte Yellow(40%) → Latte Green(80%) → Latte Red(100%)
 get_usage_7d_gradient_color() {
     local pct=$1
     local r g b
-    if [[ $pct -lt 50 ]]; then
-        # Mocha Yellow (#f9e2af) → Latte Teal (#179299)
-        local t=$((pct * 2))
-        r=$((249 + (23 - 249) * t / 100))
-        g=$((226 + (146 - 226) * t / 100))
-        b=$((175 + (153 - 175) * t / 100))
+    if [[ $pct -lt 40 ]]; then
+        # Mocha Yellow (#f9e2af) → Latte Yellow (#df8e1d)
+        local t=$((pct * 100 / 40))
+        r=$((249 + (223 - 249) * t / 100))
+        g=$((226 + (142 - 226) * t / 100))
+        b=$((175 + (29 - 175) * t / 100))
+    elif [[ $pct -lt 80 ]]; then
+        # Latte Yellow (#df8e1d) → Latte Green (#40a02b)
+        local t=$(((pct - 40) * 100 / 40))
+        r=$((223 + (64 - 223) * t / 100))
+        g=$((142 + (160 - 142) * t / 100))
+        b=$((29 + (43 - 29) * t / 100))
     else
-        # Latte Teal (#179299) → Latte Red (#d20f39)
-        local t=$(((pct - 50) * 2))
-        r=$((23 + (210 - 23) * t / 100))
-        g=$((146 + (15 - 146) * t / 100))
-        b=$((153 + (57 - 153) * t / 100))
+        # Latte Green (#40a02b) → Latte Red (#d20f39)
+        local t=$(((pct - 80) * 100 / 20))
+        r=$((64 + (210 - 64) * t / 100))
+        g=$((160 + (15 - 160) * t / 100))
+        b=$((43 + (57 - 43) * t / 100))
     fi
     echo "$r;$g;$b"
 }
@@ -153,13 +172,13 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     UNTRACKED=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
 
     if [[ "$STAGED" -eq 0 && "$UNSTAGED" -eq 0 && "$UNTRACKED" -eq 0 ]]; then
-        GIT_STATUS_DISPLAY="$(cat_green)✅ clean${RESET}"
+        GIT_STATUS_DISPLAY="$(cat_green)✅ git clean${RESET}"
     else
         STATUS=""
         [[ "$STAGED" -gt 0 ]] && STATUS="${STATUS}+${STAGED}"
         [[ "$UNSTAGED" -gt 0 ]] && STATUS="${STATUS}!${UNSTAGED}"
         [[ "$UNTRACKED" -gt 0 ]] && STATUS="${STATUS}?${UNTRACKED}"
-        GIT_STATUS_DISPLAY="$(latte_yellow)📝${STATUS}${RESET}"
+        GIT_STATUS_DISPLAY="$(latte_yellow)📝 git dirty ${STATUS}${RESET}"
     fi
 else
     GIT_STATUS_DISPLAY="$(cat_overlay)no git${RESET}"
@@ -194,11 +213,11 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     [[ -n "$BRANCH" ]] && BRANCH_DISPLAY=" $(latte_green)🌿(${BRANCH})${RESET}"
 fi
 
-# Cost
+# Cost (same color as directory)
 COST_DISPLAY=""
 if [[ "$TOTAL_COST" != "0" && -n "$TOTAL_COST" ]]; then
     COST_FMT=$(printf "%.2f" "$TOTAL_COST")
-    COST_DISPLAY="💰 $(cat_yellow)${COST_FMT}\$${RESET}"
+    COST_DISPLAY="💰 $(cat_subtext)${COST_FMT}\$${RESET}"
 else
     COST_DISPLAY="💰 $(cat_overlay)0.00\$${RESET}"
 fi
@@ -241,7 +260,7 @@ CONTEXT_K=$((CONTEXT_SIZE / 1000))
 
 CTX_BAR=$(generate_bar "$CONTEXT_PERCENT" 40 "context")
 CTX_END_COLOR=$(get_context_gradient_color "$CONTEXT_PERCENT")
-LINE3="🧠 $(cat_pink)Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
+LINE3="🧠 ${BOLD}$(mocha_maroon)Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
 
 # ============================================================================
 # Lines 4-5: Usage 5H and 7D (20 blocks)
@@ -273,6 +292,7 @@ get_usage_data() {
     return 1
 }
 
+# Format reset time as "in 2h15m" for 5H
 format_time_remaining() {
     local iso_ts="$1"
     [[ -z "$iso_ts" || "$iso_ts" == "null" ]] && return
@@ -285,9 +305,10 @@ format_time_remaining() {
     [[ $remaining -lt 0 ]] && remaining=0
     local hours=$((remaining / 3600))
     local minutes=$(((remaining % 3600) / 60))
-    echo "${hours}h${minutes}m left"
+    echo "in ${hours}h${minutes}m"
 }
 
+# Format reset time as "Jan 21 at 2pm" for 7D
 format_reset_datetime() {
     local iso_ts="$1"
     [[ -z "$iso_ts" || "$iso_ts" == "null" ]] && return
@@ -295,7 +316,17 @@ format_reset_datetime() {
     local mac_ts=$(echo "$normalized" | sed 's/+00:00/+0000/; s/Z$/+0000/; s/+\([0-9][0-9]\):\([0-9][0-9]\)/+\1\2/')
     local reset_epoch=$(date -j -f "%Y-%m-%dT%H:%M:%S%z" "$mac_ts" "+%s" 2>/dev/null)
     [[ -z "$reset_epoch" ]] && return
-    date -j -f "%s" "$reset_epoch" "+%a %H:%M" 2>/dev/null
+
+    # Get hour and determine am/pm
+    local hour=$(date -j -f "%s" "$reset_epoch" "+%H" 2>/dev/null)
+    local hour_12=$((hour % 12))
+    [[ $hour_12 -eq 0 ]] && hour_12=12
+    local ampm="am"
+    [[ $hour -ge 12 ]] && ampm="pm"
+
+    # Format as "Jan 21 at 2pm"
+    local month_day=$(date -j -f "%s" "$reset_epoch" "+%b %d" 2>/dev/null)
+    echo "${month_day} at ${hour_12}${ampm}"
 }
 
 USAGE_DATA=$(get_usage_data)
@@ -315,11 +346,11 @@ if [[ -n "$USAGE_DATA" ]]; then
     FIVE_END_COLOR=$(get_usage_gradient_color "$FIVE_HOUR")
     SEVEN_END_COLOR=$(get_usage_7d_gradient_color "$SEVEN_DAY")
 
-    LINE4="🚀 $(cat_lavender)Usage 5H${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} (Reset ${FIVE_RESET_FMT})"
-    LINE5="⭐ $(cat_yellow)Usage 7D${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} (Reset ${SEVEN_RESET_FMT})"
+    LINE4="🚀 $(cat_lavender)5H Limit${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} (Resets ${FIVE_RESET_FMT})"
+    LINE5="⭐ $(cat_yellow)7D Limit${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} (Resets ${SEVEN_RESET_FMT})"
 else
-    LINE4="🚀 $(cat_overlay)Usage 5H: N/A${RESET}"
-    LINE5="⭐ $(cat_overlay)Usage 7D: N/A${RESET}"
+    LINE4="🚀 $(cat_overlay)5H Limit${RESET}: N/A"
+    LINE5="⭐ $(cat_overlay)7D Limit${RESET}: N/A"
 fi
 
 # ============================================================================
