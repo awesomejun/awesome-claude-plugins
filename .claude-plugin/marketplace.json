@@ -11,7 +11,10 @@
   "plugins": [
     {
       "name": "awesome-claude-statusline",
-      "source": "https://github.com/awesomejun/awesome-claude-statusline.git",
+      "source": {
+        "source": "github",
+        "repo": "awesomejun/awesome-claude-statusline"
+      },
       "description": "Claude Code statusline setup wizard - Beautiful Catppuccin-themed 4-line statusline with step-by-step configuration",
       "version": "1.0.0",
       "author": {
