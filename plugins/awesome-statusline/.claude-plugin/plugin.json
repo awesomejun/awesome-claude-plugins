@@ -1,0 +1,11 @@
+{
+  "name": "awesome-statusline",
+  "version": "2.0.0",
+  "description": "Beautiful Catppuccin-themed statusline with 3 modes: Compact, Default, Full",
+  "author": {
+    "name": "awesomejun",
+    "email": "sjkang89@gmail.com",
+    "github": "awesomejun"
+  },
+  "keywords": ["statusline", "catppuccin", "setup", "customization", "terminal"]
+}

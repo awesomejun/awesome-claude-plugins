@@ -1,0 +1,17 @@
+{
+  "description": "Statusline 미설정 시 세션 시작 때 설정 안내",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-statusline.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
