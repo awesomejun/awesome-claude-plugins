@@ -9,13 +9,15 @@
   "plugins": [
     {
       "name": "awesome-statusline",
-      "description": "Beautiful Catppuccin-themed statusline with 3 modes: Compact, Default, Full",
+      "version": "2.1.0",
+      "description": "Beautiful Catppuccin-themed statusline with 3 modes (Compact/Default/Full), gradient progress bars, and real-time API usage monitoring",
       "author": {
         "name": "awesomejun",
         "email": "sjkang89@gmail.com"
       },
       "source": "./plugins/awesome-statusline",
       "category": "tools",
+      "keywords": ["statusline", "catppuccin", "theme", "api-usage", "context-window"],
       "homepage": "https://github.com/awesomejun/awesome-claude-plugins/tree/main/plugins/awesome-statusline"
     }
   ]

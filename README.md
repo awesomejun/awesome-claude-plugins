@@ -7,28 +7,96 @@ A curated collection of awesome plugins for Claude Code by [@awesomejun](https:/
 
 ## 📦 Available Plugins
 
-| Plugin | Description |
-|--------|-------------|
-| [awesome-statusline](./plugins/awesome-statusline) | Beautiful Catppuccin-themed statusline with 3 modes |
+| Plugin | Version | Description |
+|--------|---------|-------------|
+| [awesome-statusline](./plugins/awesome-statusline) | 2.1.0 | Beautiful Catppuccin-themed statusline with 3 modes |
 
-### 🎨 awesome-statusline
+---
 
-Beautiful **Catppuccin Mocha themed statusline** for Claude Code.
+## 🎨 awesome-statusline
 
-**Features:**
-- 🎨 Catppuccin Mocha theme with gradient progress bars
-- 📊 3 modes: Compact, Default, Full
-- 💡 Auto-setup when statusline is not configured
-- 📦 **Auto-backup**: Automatically backs up your existing statusline before replacing
-- 🔄 **Easy restore**: Restore previous statusline with `/make-statusline-awesome restore`
+Beautiful **Catppuccin Mocha themed statusline** for Claude Code with real-time API usage monitoring.
 
-**Commands:**
-```bash
-/make-statusline-awesome              # Quick setup (default theme)
-/make-statusline-awesome customize    # Customize theme and options
-/make-statusline-awesome restore      # Restore previous statusline
-/statusline-mode                      # Switch between Compact/Default/Full
+### ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 🎨 **Catppuccin Theme** | Mocha dark theme with beautiful color palette |
+| 📊 **3 Display Modes** | Compact, Default, Full - choose your style |
+| 🌈 **Gradient Progress Bars** | 4-stage color gradients that change based on usage |
+| 🚀 **API Usage Monitoring** | Real-time 5-hour and 7-day usage limits |
+| 🧠 **Context Tracking** | Visual context window usage |
+| 💾 **Auto-backup** | Automatically backs up existing statusline |
+| 🔄 **Easy Restore** | One command to restore previous statusline |
+
+### 📐 Display Modes
+
+| Mode | Lines | Bar Width | Best For |
+|------|-------|-----------|----------|
+| **Compact** | 2 | 10 blocks | Narrow terminals, minimal info |
+| **Default** | 2 | 10 blocks | Balanced information display |
+| **Full** | 5 | 40 blocks | Detailed monitoring with cost & time |
+
+#### Compact Mode (2 lines)
 ```
+🤖Opus 📂~/project 🌿(main)✅
+🧠██████████ 5H██████████ 7D██████████
+```
+
+#### Default Mode (2 lines)
+```
+🤖 Claude Opus 4.5 | 🎨 learning | 📂 ~/project 🌿(main)✅
+🧠 Context ██████████ 25% | 5H ██████████ 15% (3h42m) | 7D ██████████ 8% (Sun)
+```
+
+#### Full Mode (5 lines)
+```
+🤖 Claude Opus 4.5 | ✅ git clean | 🐍 base | 🎨 learning
+📂 /Users/kang/project 🌿(main) | 💰 0.15$ | ⏰ 5m
+🧠 Context  ████████████████████████████████████████ 25% used (50k/200k)
+🚀 5H Limit ████████████████████████████████████████ 15% (Resets in 3h42m)
+⭐ 7D Limit ████████████████████████████████████████ 8% (Resets Jan 21 at 2pm)
+```
+
+### 🌈 Gradient Colors
+
+Each progress bar uses a unique 4-stage gradient that changes color based on usage:
+
+| Bar | 0-40% | 40-80% | 80-100% |
+|-----|-------|--------|---------|
+| **Context** | Mocha Maroon | Latte Maroon | Latte Red |
+| **5H Limit** | Mocha Lavender | Latte Blue | Latte Red |
+| **7D Limit** | Mocha Yellow | Latte Green | Latte Red |
+
+### 🔧 Commands
+
+| Command | Description |
+|---------|-------------|
+| `/awesome-statusline-start` | Interactive setup wizard |
+| `/awesome-statusline-start compact` | Quick install Compact mode |
+| `/awesome-statusline-start default` | Quick install Default mode |
+| `/awesome-statusline-start full` | Quick install Full mode |
+| `/awesome-statusline-start legacy` | Install 1.0.0 Legacy version |
+| `/awesome-statusline-start restore` | Restore from backup |
+| `/awesome-statusline-mode` | Switch between modes |
+
+### 📋 Information Displayed
+
+| Icon | Information | Modes |
+|------|-------------|-------|
+| 🤖 | Model name (Opus/Sonnet/Haiku) | All |
+| 📂 | Current directory path | All |
+| 🌿 | Git branch | All |
+| ✅/📝 | Git status (clean/dirty) | All |
+| 🐍 | Conda environment | Default, Full |
+| 🎨 | Output style | Default, Full |
+| 💰 | Session cost | Full |
+| ⏰ | Session duration | Full |
+| 🧠 | Context window usage | All |
+| 🚀 | 5-hour API limit | All |
+| ⭐ | 7-day API limit | All |
+
+---
 
 ## 🚀 Installation
 
@@ -38,7 +106,7 @@ Beautiful **Catppuccin Mocha themed statusline** for Claude Code.
 /plugin marketplace add awesomejun/awesome-claude-plugins
 ```
 
-### Step 2: Install a Plugin
+### Step 2: Install the Plugin
 
 ```bash
 /plugin install awesome-statusline@awesome-claude-plugins
@@ -47,9 +115,17 @@ Beautiful **Catppuccin Mocha themed statusline** for Claude Code.
 ### Step 3: Restart Claude Code
 
 ```bash
-# Exit current session and restart
+# Exit and restart
 claude
 ```
+
+### Step 4: Run Setup Wizard
+
+```bash
+/awesome-statusline-start
+```
+
+---
 
 ## 📋 Marketplace Commands
 
@@ -64,6 +140,8 @@ claude
 /plugin marketplace remove awesome-claude-plugins
 ```
 
+---
+
 ## 🔧 For Plugin Developers
 
 Want to add your plugin to this marketplace?
@@ -72,6 +150,8 @@ Want to add your plugin to this marketplace?
 2. Add your plugin to `plugins/` directory
 3. Add your plugin entry to `.claude-plugin/marketplace.json`
 4. Submit a pull request
+
+---
 
 ## 📄 License
 

@@ -1,71 +1,72 @@
 # Awesome Statusline
 
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blueviolet)](https://claude.ai/code)
+[![Version](https://img.shields.io/badge/version-2.1.0-blue)](https://github.com/awesomejun/awesome-claude-plugins)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Beautiful **Catppuccin-themed statusline** for Claude Code with **3 display modes**.
+Beautiful **Catppuccin-themed statusline** for Claude Code with **3 display modes** and real-time API usage monitoring.
 
-## Features
+## ✨ Features
 
-- **3 Display Modes**: Compact, Default, Full
-- **Catppuccin Mocha Theme**: Beautiful gradient progress bars
-- **Real-time Info**: Model, Git status, Context usage, API limits
-- **Easy Mode Switching**: `/awesome-statusline-mode` command
-- **Dynamic % Colors**: Percentage numbers match gradient end color (Bold)
+- 🎨 **3 Display Modes**: Compact, Default, Full
+- 🌈 **Catppuccin Mocha Theme**: Beautiful 4-stage gradient progress bars
+- 📊 **Real-time Monitoring**: Model, Git status, Context usage, API limits (5H/7D)
+- 🔄 **Easy Mode Switching**: `/awesome-statusline-mode` command
+- 💾 **Auto-backup**: Automatically backs up existing statusline
+- 🌟 **Dynamic Colors**: Percentage numbers match gradient end color (Bold)
 
-## 3 Modes
+## 📐 Display Modes
 
-### Compact (Short) - 2 lines
+### Compact (Short) - 2 lines, 10-block bars
 ```
 🤖Opus 📂~/projects/my-app 🌿(main)✅
-🧠█████░░░░░ 5H██████░░░░ 7D████░░░░░░
+🧠██████████ 5H██████████ 7D██████████
 ```
 
-### Default - 2 lines [DEFAULT]
+### Default - 2 lines, 10-block bars
 ```
-🤖 Opus 4.5 | 🎨 Learning | 📂 ~/projects/my-app 🌿(main)✅
-🧠 Context █████░░░░░ 47% | 5H ██████░░░░ 62% (1h2m) | 7D ████░░░░░░ 35% (Wed)
+🤖 Claude Opus 4.5 | 🎨 learning | 📂 ~/projects/my-app 🌿(main)✅
+🧠 Context ██████████ 47% | 5H ██████████ 62% (1h2m) | 7D ██████████ 35% (Wed)
 ```
 
-### Full (Long) - 5 lines
+### Full (Long) - 5 lines, 40-block bars
 ```
-🤖 Opus 4.5 | ✅ clean | 🐍 base | 🎨 Learning
+🤖 Claude Opus 4.5 | ✅ git clean | 🐍 base | 🎨 learning
 📂 /Users/user/projects/my-app 🌿(main) | 💰 1.23$ | ⏰ 12m
-🧠 Context  ████████████░░░░░░░░ 56% used (105k/200k)
-🚀 Usage 5H ██████████████░░░░░░ 67% (Reset 1h32m left)
-⭐ Usage 7D ████████░░░░░░░░░░░░ 35% (Reset Wed 13:59)
+🧠 Context  ████████████████████████████████████████ 56% used (105k/200k)
+🚀 5H Limit ████████████████████████████████████████ 67% (Resets in 1h32m)
+⭐ 7D Limit ████████████████████████████████████████ 35% (Resets Jan 21 at 2pm)
 ```
 
-## Installation
+## 🚀 Installation
 
 ### Via Marketplace (Recommended)
 
 ```bash
 # Add marketplace
-/plugin marketplace add https://github.com/awesomejun/awesomejun-plugins-market.git
+/plugin marketplace add awesomejun/awesome-claude-plugins
 
 # Install plugin
-/plugin install awesome-statusline@awesomejun-plugins-market
+/plugin install awesome-statusline@awesome-claude-plugins
 
 # Restart Claude Code
 claude
+
+# Run setup wizard
+/awesome-statusline-start
 ```
 
-### Direct Installation
-
-```bash
-/plugin install https://github.com/awesomejun/awesome-claude-statusline.git
-```
-
-## Usage
+## 🔧 Usage
 
 ### Initial Setup
 
 ```bash
 /awesome-statusline-start           # Interactive setup wizard
+/awesome-statusline-start compact   # Install Compact mode directly
 /awesome-statusline-start default   # Install Default mode directly
 /awesome-statusline-start full      # Install Full mode directly
 /awesome-statusline-start legacy    # Install 1.0.0 Legacy mode
+/awesome-statusline-start restore   # Restore from backup
 ```
 
 ### Switch Mode
@@ -80,37 +81,37 @@ claude
 /awesome-statusline-mode           # Interactive selection
 ```
 
-## Mode Comparison
+## 📊 Mode Comparison
 
 | Feature | Compact | Default | Full |
 |---------|---------|---------|------|
 | Lines | 2 | 2 | 5 |
-| Bar Width | 10 | 10 | 20 |
-| Model | Short (Opus) | Full (Opus 4.5) | Full |
-| Output Style | - | Yes | Yes |
-| Git Status | Icon | Icon | Detailed |
-| Conda Env | - | - | Yes |
-| Cost | - | - | Yes |
-| Duration | - | - | Yes |
-| Reset Time | - | Short | Full |
-| % Bold+Gradient | - | Yes | Yes |
+| Bar Width | 10 blocks | 10 blocks | 40 blocks |
+| Model | Short (Opus) | Full (Claude Opus 4.5) | Full |
+| Output Style | ❌ | ✅ | ✅ |
+| Git Status | Icon only | Icon only | Detailed (+N !N ?N) |
+| Conda Env | ❌ | ❌ | ✅ |
+| Cost | ❌ | ❌ | ✅ |
+| Duration | ❌ | ❌ | ✅ |
+| Reset Time | ❌ | Short (1h2m) | Full (Resets in 1h32m) |
+| % Bold+Gradient | ❌ | ✅ | ✅ |
 
-## Gradient Colors
+## 🌈 Gradient Colors
 
-All modes use the same beautiful Catppuccin gradients:
+4-stage gradients that change based on usage level:
 
-- **Context**: Pink -> Maroon -> Red
-- **5H Usage**: Lavender -> Blue -> Red
-- **7D Usage**: Yellow -> Peach -> Red
+| Bar | 0-40% | 40-80% | 80-100% |
+|-----|-------|--------|---------|
+| **Context** | Mocha Maroon | Latte Maroon | Latte Red |
+| **5H Limit** | Mocha Lavender | Latte Blue | Latte Red |
+| **7D Limit** | Mocha Yellow | Latte Green | Latte Red |
 
-In Default and Full modes, the percentage number uses the **gradient end color** with **Bold** style.
-
-## Requirements
+## 📋 Requirements
 
 - Claude Code CLI
-- macOS (for Keychain access)
+- macOS (for Keychain OAuth token access)
 - `jq` (for JSON parsing)
 
-## License
+## 📄 License
 
 MIT License - See [LICENSE](LICENSE) file
