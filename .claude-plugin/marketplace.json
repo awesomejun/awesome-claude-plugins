@@ -1,33 +1,22 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "awesomejun-plugins-market",
+  "description": "Awesome plugins for Claude Code by awesomejun",
   "owner": {
     "name": "awesomejun",
     "email": "sjkang89@gmail.com"
   },
-  "metadata": {
-    "description": "Awesome plugins for Claude Code by awesomejun",
-    "version": "2.0.0"
-  },
   "plugins": [
     {
       "name": "awesome-statusline",
-      "source": "./plugins/awesome-statusline",
       "description": "Beautiful Catppuccin-themed statusline with 3 modes: Compact, Default, Full",
-      "version": "2.0.0",
       "author": {
         "name": "awesomejun",
-        "github": "awesomejun"
+        "email": "sjkang89@gmail.com"
       },
-      "homepage": "https://github.com/awesomejun/awesome-statusline",
-      "repository": "https://github.com/awesomejun/awesome-statusline",
-      "license": "MIT",
-      "keywords": [
-        "statusline",
-        "catppuccin",
-        "terminal",
-        "customization"
-      ],
-      "category": "tools"
+      "source": "./plugins/awesome-statusline",
+      "category": "tools",
+      "homepage": "https://github.com/awesomejun/awesomejun-plugins-market/tree/main/plugins/awesome-statusline"
     }
   ]
 }
