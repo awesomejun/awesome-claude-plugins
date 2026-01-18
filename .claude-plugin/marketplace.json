@@ -12,8 +12,8 @@
     {
       "name": "awesome-statusline",
       "source": {
-        "type": "url",
-        "url": "https://github.com/awesomejun/awesome-claude-statusline.git"
+        "source": "github",
+        "repo": "awesomejun/awesome-claude-statusline"
       },
       "description": "Beautiful Catppuccin-themed statusline with 3 modes: Compact, Default, Full",
       "version": "2.0.0",
