@@ -3,7 +3,7 @@
 # Awesome Statusline - FULL (Long) Mode
 # ============================================================================
 # Line 1: 🤖 Model | 🎨 Style | ✅ Git (↑ahead ↓behind) | 🐍 Env
-# Line 2: 📂 full path 🌿(branch) | 💰 cost | ⏱️ duration
+# Line 2: 📂 full path 🌿(branch) | 💰 cost | ⏰ duration
 # Line 3: 🧠 Context bar 40 blocks - MochaMaroon→LatteMaroon(40%)→Red(80-100%)
 # Line 4: 🚀 5H Limit bar 40 blocks - Lavender→Lavender(40%)→Blue(80%)→Red(100%)
 # Line 5: 🌟 7D Limit bar 40 blocks - Yellow→Yellow(40%)→Green(80%)→Red(100%)
@@ -110,9 +110,11 @@ generate_bar() {
         bar+="\033[38;2;${colors[$i]}m█"
     done
 
-    # Build empty blocks
+    # Build empty blocks (use last filled color for continuity)
+    local empty_color="${colors[0]}"
+    [[ $filled -gt 0 ]] && empty_color="${colors[$((filled-1))]}"
     for ((i=0; i<width-filled; i++)); do
-        bar+="\033[38;2;${C_BAR_EMPTY}m░"
+        bar+="\033[38;2;${empty_color}m░"
     done
 
     printf "%b%b" "$bar" "$RESET"
@@ -227,9 +229,9 @@ if [[ "$TOTAL_DURATION" != "0" && -n "$TOTAL_DURATION" ]]; then
     else
         DURATION_FMT="$((DURATION_SEC / 60))m"
     fi
-    DURATION_DISPLAY="⏱️ ${C_SUBTEXT}${DURATION_FMT}${RESET}"
+    DURATION_DISPLAY="⏰ ${C_SUBTEXT}${DURATION_FMT}${RESET}"
 else
-    DURATION_DISPLAY="⏱️ ${C_OVERLAY}0m${RESET}"
+    DURATION_DISPLAY="⏰ ${C_OVERLAY}0m${RESET}"
 fi
 
 LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} | ${COST_DISPLAY} | ${DURATION_DISPLAY}"
@@ -348,11 +350,14 @@ else
 fi
 
 # ============================================================================
-# Output (atomic - single printf to prevent race conditions)
+# Output (fully pre-rendered, cursor hidden, single write)
 # ============================================================================
-printf "%b%b\n%b%b\n%b%b\n%b%b\n%b%b\n" \
+FINAL_OUTPUT=$(printf "%b%b\n%b%b\n%b%b\n%b%b\n%b%b" \
     "$LINE1" "$CLR" \
     "$LINE2" "$CLR" \
     "$LINE3" "$CLR" \
     "$LINE4" "$CLR" \
-    "$LINE5" "$CLR"
+    "$LINE5" "$CLR")
+tput civis 2>/dev/null  # hide cursor
+printf "%s\n" "$FINAL_OUTPUT"
+tput cnorm 2>/dev/null  # restore cursor
