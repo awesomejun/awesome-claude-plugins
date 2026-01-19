@@ -43,7 +43,7 @@ latte_maroon() { echo -e "\033[38;2;230;69;83m"; }
 latte_sky() { echo -e "\033[38;2;4;165;229m"; }
 latte_blue() { echo -e "\033[38;2;30;102;245m"; }
 mocha_maroon() { echo -e "\033[38;2;235;160;172m"; }
-latte_text() { echo -e "\033[38;2;76;79;105m"; }
+pure_black() { echo -e "\033[38;2;0;0;0m"; }
 
 # ============================================================================
 # Gradient Functions
@@ -211,8 +211,8 @@ else
     ENV_DISPLAY="$(cat_overlay)no env${RESET}"
 fi
 
-# Plugin version (Latte Text - darkest gray)
-VERSION_DISPLAY="$(latte_text)v2.1.0${RESET}"
+# Plugin version (dark gray, same as no git/no env)
+VERSION_DISPLAY="$(cat_overlay)plugin version = v2.1.0${RESET}"
 
 # Build Line 1: Model | Style | Git | Env | Version
 LINE1="${MODEL_DISPLAY}"
