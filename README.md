@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="plugins/awesome-statusline/assets/hero.jpeg" alt="Awesome Statusline" width="100%"/>
+  <img src="plugins/awesome-statusline/assets/feature-overview.jpeg" alt="Awesome Statusline" width="100%"/>
 </p>
 
 <h1 align="center">Awesome Claude Plugins</h1>
@@ -83,10 +83,6 @@ Claude Code 내에서 아래 슬래시 커맨드를 입력합니다:
 </table>
 
 > **Awesome Statusline**은 이런 분들을 위해 만들어졌습니다!
-
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/feature-overview.jpeg" alt="Awesome Statusline Feature Overview" width="100%"/>
-</p>
 
 **Catppuccin 테마**의 아름다운 그라데이션 프로그레스 바로 **Context**, **5H/7D API 제한**을 실시간으로 모니터링하세요. 더 이상 슬래시 커맨드를 입력할 필요 없이, 터미널 상단에서 한눈에 모든 정보를 확인할 수 있습니다.
 
