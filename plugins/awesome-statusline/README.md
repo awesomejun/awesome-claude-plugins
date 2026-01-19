@@ -4,11 +4,13 @@
 [![Version](https://img.shields.io/badge/version-2.1.0-blue)](https://github.com/awesomejun/awesome-claude-plugins)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Beautiful **Catppuccin-themed statusline** for Claude Code with **3 display modes** and real-time API usage monitoring.
+![Awesome Statusline](assets/hero.jpeg)
+
+Beautiful **Catppuccin-themed statusline** for Claude Code with **4 display modes** and real-time API usage monitoring.
 
 ## ✨ Features
 
-- 🎨 **3 Display Modes**: Compact, Default, Full
+- 🎨 **4 Display Modes**: Compact, Default, Full, Legacy
 - 🌈 **Catppuccin Mocha Theme**: Beautiful 4-stage gradient progress bars
 - 📊 **Real-time Monitoring**: Model, Git status, Context usage, API limits (5H/7D)
 - 🔄 **Easy Mode Switching**: `/awesome-statusline-mode` command
@@ -17,26 +19,29 @@ Beautiful **Catppuccin-themed statusline** for Claude Code with **3 display mode
 
 ## 📐 Display Modes
 
-### Compact (Short) - 2 lines, 10-block bars
-```
-🤖Opus 📂~/projects/my-app 🌿(main)✅
-🧠██████████ 5H██████████ 7D██████████
-```
+### Full (Long) - 5 lines, 40-block bars
+
+![Full Mode](assets/demo-full.png)
+
+The most detailed mode with cost tracking, session duration, and full reset time information.
 
 ### Default - 2 lines, 10-block bars
-```
-🤖 Claude Opus 4.5 | 🎨 learning | 📂 ~/projects/my-app 🌿(main)✅
-🧠 Context ██████████ 47% | 5H ██████████ 62% (1h2m) | 7D ██████████ 35% (Wed)
-```
 
-### Full (Long) - 5 lines, 40-block bars
-```
-🤖 Claude Opus 4.5 | 🎨 learning | ✅ clean ↑1 | 🐍 base
-📂 /Users/user/projects/my-app 🌿(main) | 💰 1.23$ | ⏰ 12m
-🧠 Context  ████████████████████████████████████████ 56% used (105k/200k)
-🚀 5H Limit ████████████████████████████████████████ 67% (Resets in 1h32m)
-⭐ 7D Limit ████████████████████████████████████████ 35% (Resets Jan 21 at 2pm)
-```
+![Default Mode](assets/demo-default.png)
+
+Balanced information display with compact progress bars and short reset times.
+
+### Compact (Short) - 2 lines, 10-block bars
+
+![Compact Mode](assets/demo-compact.png)
+
+Minimal display for narrow terminals or distraction-free coding.
+
+### Legacy (1.0.2) - 4 lines, 40-block bars
+
+![Legacy Mode](assets/demo-legacy.png)
+
+Classic design from version 1.0.2 with simple gradient colors.
 
 ## 🚀 Installation
 
@@ -65,7 +70,7 @@ claude
 /awesome-statusline-start compact   # Install Compact mode directly
 /awesome-statusline-start default   # Install Default mode directly
 /awesome-statusline-start full      # Install Full mode directly
-/awesome-statusline-start legacy    # Install 1.0.0 Legacy mode
+/awesome-statusline-start legacy    # Install 1.0.2 Legacy mode
 /awesome-statusline-start restore   # Restore from backup
 ```
 
@@ -75,7 +80,7 @@ claude
 /awesome-statusline-mode compact   # Compact mode
 /awesome-statusline-mode default   # Default mode
 /awesome-statusline-mode full      # Full mode
-/awesome-statusline-mode legacy    # 1.0.0 Legacy mode
+/awesome-statusline-mode legacy    # 1.0.2 Legacy mode
 /awesome-statusline-mode restore   # Restore from backup
 
 /awesome-statusline-mode           # Interactive selection
@@ -83,21 +88,23 @@ claude
 
 ## 📊 Mode Comparison
 
-| Feature | Compact | Default | Full |
-|---------|---------|---------|------|
-| Lines | 2 | 2 | 5 |
-| Bar Width | 10 blocks | 10 blocks | 40 blocks |
-| Model | Short (Opus) | Full (Claude Opus 4.5) | Full |
-| Output Style | ❌ | ✅ (default, explanatory, learning, ...) | ✅ |
-| Git Status | Icon only | Icon only | Detailed (+N !N ?N) |
-| Git ↑↓ (ahead/behind) | ❌ | ❌ | ✅ |
-| Conda Env | ❌ | ❌ | ✅ |
-| Cost | ❌ | ❌ | ✅ |
-| Duration | ❌ | ❌ | ✅ |
-| Reset Time | ❌ | Short (1h2m) | Full (Resets in 1h32m) |
-| % Bold+Gradient | ❌ | ✅ | ✅ |
+| Feature | Compact | Default | Full | Legacy |
+|---------|---------|---------|------|--------|
+| Lines | 2 | 2 | 5 | 4 |
+| Bar Width | 10 blocks | 10 blocks | 40 blocks | 40 blocks |
+| Model | Short (Opus) | Full (Opus 4.5) | Full | Full |
+| Output Style | ❌ | ✅ | ✅ | ✅ |
+| Git Status | Icon only | Icon only | Detailed | Simple |
+| Git ↑↓ (ahead/behind) | ❌ | ❌ | ✅ | ❌ |
+| Conda Env | ❌ | ❌ | ✅ | ✅ |
+| Cost | ❌ | ❌ | ✅ | ❌ |
+| Duration | ❌ | ❌ | ✅ | ❌ |
+| Reset Time | ❌ | Short (1h2m) | Full | Short |
+| % Bold+Gradient | ❌ | ✅ | ✅ | ✅ |
 
 ## 🌈 Gradient Colors
+
+### 2.1.0 Modes (Compact, Default, Full)
 
 4-stage gradients that change based on usage level:
 
@@ -106,6 +113,13 @@ claude
 | **Context** | Mocha Maroon | Latte Maroon | Latte Red |
 | **5H Limit** | Mocha Lavender | Latte Blue | Latte Red |
 | **7D Limit** | Mocha Yellow | Latte Green | Latte Red |
+
+### 1.0.2 Legacy
+
+| Bar | 0-50% | 50-100% |
+|-----|-------|---------|
+| **Context** | Latte Yellow | Latte Red → Mauve |
+| **Usage (5H/7D)** | Mocha Green | Latte Teal → Blue |
 
 ## 📋 Requirements
 

@@ -188,7 +188,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     fi
 
     if [[ "$STAGED" -eq 0 && "$UNSTAGED" -eq 0 && "$UNTRACKED" -eq 0 ]]; then
-        GIT_STATUS_DISPLAY="$(cat_green)✅ clean${RESET}"
+        GIT_STATUS_DISPLAY="$(cat_green)✅ git clean${RESET}"
         [[ -n "$AHEAD_BEHIND" ]] && GIT_STATUS_DISPLAY="${GIT_STATUS_DISPLAY} ${AHEAD_BEHIND}"
     else
         STATUS=""
