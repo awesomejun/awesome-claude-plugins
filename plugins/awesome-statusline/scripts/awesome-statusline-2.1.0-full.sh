@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ============================================================================
 # Awesome Statusline - FULL (Long) Mode
 # ============================================================================
@@ -9,7 +9,7 @@
 # Line 5: 🌟 7D Limit bar 40 blocks - Yellow→Yellow(40%)→Green(80%)→Red(100%)
 # 5H Reset: "(Resets in 2h15m)" | 7D Reset: "(Resets Jan 21 at 2pm)"
 # ============================================================================
-# v2.1.0 - Fixed: echo -e → variables, added line clear \033[K
+# v2.1.0 - Fixed: echo -e → variables, added line clear \033[K, pre-calc colors, atomic output
 # ============================================================================
 
 input=$(cat)
@@ -48,83 +48,46 @@ C_LATTE_BLUE="\033[38;2;30;102;245m"
 C_MOCHA_MAROON="\033[38;2;235;160;172m"
 
 # ============================================================================
-# Gradient Functions
+# Pre-calculated Gradient Colors (40 blocks) - No runtime calculation
 # ============================================================================
-# Context gradient: Mocha Maroon(0%) → Latte Maroon(40%) → Latte Red(80-100%)
-get_context_gradient_color() {
-    local pct=$1
-    local r g b
-
-    if [[ $pct -lt 40 ]]; then
-        # Mocha Maroon (#eba0ac) → Latte Maroon (#e64553)
-        local t=$((pct * 100 / 40))
-        r=$((235 + (230 - 235) * t / 100))
-        g=$((160 + (69 - 160) * t / 100))
-        b=$((172 + (83 - 172) * t / 100))
-    elif [[ $pct -lt 80 ]]; then
-        # Latte Maroon (#e64553) → Latte Red (#d20f39)
-        local t=$(((pct - 40) * 100 / 40))
-        r=$((230 + (210 - 230) * t / 100))
-        g=$((69 + (15 - 69) * t / 100))
-        b=$((83 + (57 - 83) * t / 100))
-    else
-        # Latte Red (#d20f39) - hold at 80-100%
-        r=210; g=15; b=57
-    fi
-    echo "$r;$g;$b"
-}
+# Context: Mocha Maroon(0%) → Latte Maroon(40%) → Latte Red(80-100%)
+GRAD_CONTEXT=(
+    "235;160;172" "234;154;166" "234;149;161" "233;143;155" "233;137;150"
+    "232;132;144" "232;126;139" "231;120;133" "231;115;127" "230;109;122"
+    "230;103;116" "229;98;111" "229;92;105" "228;86;100" "228;81;94"
+    "227;75;89" "230;69;83" "229;65;79" "228;62;76" "227;58;72"
+    "226;55;69" "225;51;65" "224;48;62" "223;44;59" "222;41;55"
+    "221;37;52" "220;34;48" "219;30;45" "218;27;41" "217;23;38"
+    "216;20;34" "215;16;31" "210;15;57" "210;15;57" "210;15;57"
+    "210;15;57" "210;15;57" "210;15;57" "210;15;57" "210;15;57"
+)
 
 # 5H: Mocha Lavender(0%) → Latte Lavender(40%) → Latte Blue(80%) → Latte Red(100%)
-get_usage_gradient_color() {
-    local pct=$1
-    local r g b
-    if [[ $pct -lt 40 ]]; then
-        # Mocha Lavender (#b4befe) → Latte Lavender (#7287fd)
-        local t=$((pct * 100 / 40))
-        r=$((180 + (114 - 180) * t / 100))
-        g=$((190 + (135 - 190) * t / 100))
-        b=$((254 + (253 - 254) * t / 100))
-    elif [[ $pct -lt 80 ]]; then
-        # Latte Lavender (#7287fd) → Latte Blue (#1e66f5)
-        local t=$(((pct - 40) * 100 / 40))
-        r=$((114 + (30 - 114) * t / 100))
-        g=$((135 + (102 - 135) * t / 100))
-        b=$((253 + (245 - 253) * t / 100))
-    else
-        # Latte Blue (#1e66f5) → Latte Red (#d20f39)
-        local t=$(((pct - 80) * 100 / 20))
-        r=$((30 + (210 - 30) * t / 100))
-        g=$((102 + (15 - 102) * t / 100))
-        b=$((245 + (57 - 245) * t / 100))
-    fi
-    echo "$r;$g;$b"
-}
+GRAD_5H=(
+    "180;190;254" "175;186;253" "171;183;253" "167;179;253" "163;176;253"
+    "158;172;253" "154;169;253" "150;165;253" "146;162;253" "141;158;253"
+    "137;155;253" "133;151;253" "129;148;253" "124;144;253" "120;141;253"
+    "116;137;253" "114;135;253" "108;132;252" "103;130;251" "98;127;250"
+    "93;125;249" "87;122;248" "82;120;247" "77;117;247" "72;115;246"
+    "66;112;245" "61;110;244" "56;107;243" "51;105;242" "45;102;241"
+    "40;100;241" "35;97;240" "30;102;245" "52;98;235" "75;93;226"
+    "97;89;216" "120;84;207" "142;80;197" "165;75;188" "210;15;57"
+)
 
 # 7D: Mocha Yellow(0%) → Latte Yellow(40%) → Latte Green(80%) → Latte Red(100%)
-get_usage_7d_gradient_color() {
-    local pct=$1
-    local r g b
-    if [[ $pct -lt 40 ]]; then
-        # Mocha Yellow (#f9e2af) → Latte Yellow (#df8e1d)
-        local t=$((pct * 100 / 40))
-        r=$((249 + (223 - 249) * t / 100))
-        g=$((226 + (142 - 226) * t / 100))
-        b=$((175 + (29 - 175) * t / 100))
-    elif [[ $pct -lt 80 ]]; then
-        # Latte Yellow (#df8e1d) → Latte Green (#40a02b)
-        local t=$(((pct - 40) * 100 / 40))
-        r=$((223 + (64 - 223) * t / 100))
-        g=$((142 + (160 - 142) * t / 100))
-        b=$((29 + (43 - 29) * t / 100))
-    else
-        # Latte Green (#40a02b) → Latte Red (#d20f39)
-        local t=$(((pct - 80) * 100 / 20))
-        r=$((64 + (210 - 64) * t / 100))
-        g=$((160 + (15 - 160) * t / 100))
-        b=$((43 + (57 - 43) * t / 100))
-    fi
-    echo "$r;$g;$b"
-}
+GRAD_7D=(
+    "249;226;175" "247;220;165" "246;215;156" "244;210;147" "243;204;138"
+    "241;199;129" "240;194;120" "238;188;111" "237;183;102" "235;178;93"
+    "234;172;83" "232;167;74" "231;162;65" "229;157;56" "228;151;47"
+    "226;146;38" "223;142;29" "213;142;29" "203;143;30" "193;144;31"
+    "183;145;32" "173;146;33" "163;147;34" "153;148;35" "143;148;36"
+    "133;149;37" "123;150;38" "113;151;39" "103;152;40" "93;153;40"
+    "83;154;41" "74;156;42" "64;160;43" "82;141;44" "101;123;45"
+    "119;104;47" "138;86;48" "156;67;50" "175;49;51" "210;15;57"
+)
+
+# Empty bar color (overlay gray)
+C_BAR_EMPTY="108;112;134"
 
 generate_bar() {
     local pct=$1
@@ -134,29 +97,42 @@ generate_bar() {
     local filled=$(( (pct * width + 50) / 100 ))
     [[ $filled -gt $width ]] && filled=$width
 
-    local end_color
+    # Select gradient array
+    local -n colors
     case "$type" in
-        context) end_color=$(get_context_gradient_color "$pct") ;;
-        7d) end_color=$(get_usage_7d_gradient_color "$pct") ;;
-        *) end_color=$(get_usage_gradient_color "$pct") ;;
+        context) colors=GRAD_CONTEXT ;;
+        7d) colors=GRAD_7D ;;
+        *) colors=GRAD_5H ;;
     esac
 
+    # Build filled blocks using pre-calculated colors
     for ((i=0; i<filled; i++)); do
-        local block_pct=$((i * 100 / width))
-        local color
-        case "$type" in
-            context) color=$(get_context_gradient_color "$block_pct") ;;
-            7d) color=$(get_usage_7d_gradient_color "$block_pct") ;;
-            *) color=$(get_usage_gradient_color "$block_pct") ;;
-        esac
-        bar+="\033[38;2;${color}m█"
+        bar+="\033[38;2;${colors[$i]}m█"
     done
 
+    # Build empty blocks
     for ((i=0; i<width-filled; i++)); do
-        bar+="\033[38;2;${end_color}m░"
+        bar+="\033[38;2;${C_BAR_EMPTY}m░"
     done
 
     printf "%b%b" "$bar" "$RESET"
+}
+
+# Get end color for percentage display
+get_end_color() {
+    local pct=$1
+    local type=$2
+    local idx=$(( (pct * 39 + 50) / 100 ))
+    [[ $idx -gt 39 ]] && idx=39
+
+    local -n colors
+    case "$type" in
+        context) colors=GRAD_CONTEXT ;;
+        7d) colors=GRAD_7D ;;
+        *) colors=GRAD_5H ;;
+    esac
+
+    echo "${colors[$idx]}"
 }
 
 # ============================================================================
@@ -277,7 +253,7 @@ TOKENS_K=$((CURRENT_TOKENS / 1000))
 CONTEXT_K=$((CONTEXT_SIZE / 1000))
 
 CTX_BAR=$(generate_bar "$CONTEXT_PERCENT" 40 "context")
-CTX_END_COLOR=$(get_context_gradient_color "$CONTEXT_PERCENT")
+CTX_END_COLOR=$(get_end_color "$CONTEXT_PERCENT" "context")
 LINE3="🧠 ${C_MOCHA_MAROON}Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
 
 # ============================================================================
@@ -361,8 +337,8 @@ if [[ -n "$USAGE_DATA" ]]; then
     FIVE_BAR=$(generate_bar "$FIVE_HOUR" 40 "5h")
     SEVEN_BAR=$(generate_bar "$SEVEN_DAY" 40 "7d")
 
-    FIVE_END_COLOR=$(get_usage_gradient_color "$FIVE_HOUR")
-    SEVEN_END_COLOR=$(get_usage_7d_gradient_color "$SEVEN_DAY")
+    FIVE_END_COLOR=$(get_end_color "$FIVE_HOUR" "5h")
+    SEVEN_END_COLOR=$(get_end_color "$SEVEN_DAY" "7d")
 
     LINE4="🚀 ${C_LAVENDER}5H Limit${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} (Resets ${FIVE_RESET_FMT})"
     LINE5="🌟 ${C_YELLOW}7D Limit${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} (Resets ${SEVEN_RESET_FMT})"
@@ -372,10 +348,11 @@ else
 fi
 
 # ============================================================================
-# Output (using printf with line clear)
+# Output (atomic - single printf to prevent race conditions)
 # ============================================================================
-printf "%b%b\n" "$LINE1" "$CLR"
-printf "%b%b\n" "$LINE2" "$CLR"
-printf "%b%b\n" "$LINE3" "$CLR"
-printf "%b%b\n" "$LINE4" "$CLR"
-printf "%b%b\n" "$LINE5" "$CLR"
+printf "%b%b\n%b%b\n%b%b\n%b%b\n%b%b\n" \
+    "$LINE1" "$CLR" \
+    "$LINE2" "$CLR" \
+    "$LINE3" "$CLR" \
+    "$LINE4" "$CLR" \
+    "$LINE5" "$CLR"
