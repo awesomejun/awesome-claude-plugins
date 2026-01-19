@@ -212,7 +212,7 @@ else
 fi
 
 # Plugin version (dark gray, same as no git/no env)
-VERSION_DISPLAY="$(cat_overlay)plugin version = v2.1.0${RESET}"
+VERSION_DISPLAY="$(cat_overlay)v2.1.0${RESET}"
 
 # Build Line 1: Model | Style | Git | Env | Version
 LINE1="${MODEL_DISPLAY}"
@@ -249,14 +249,12 @@ if [[ "$TOTAL_DURATION" != "0" && -n "$TOTAL_DURATION" ]]; then
     DURATION_SEC=$((TOTAL_DURATION / 1000))
     if [[ $DURATION_SEC -ge 3600 ]]; then
         DURATION_FMT="$((DURATION_SEC / 3600))h$((DURATION_SEC % 3600 / 60))m"
-    elif [[ $DURATION_SEC -ge 60 ]]; then
-        DURATION_FMT="$((DURATION_SEC / 60))m"
     else
-        DURATION_FMT="${DURATION_SEC}s"
+        DURATION_FMT="$((DURATION_SEC / 60))m"
     fi
     DURATION_DISPLAY="⏱️ $(cat_subtext)${DURATION_FMT}${RESET}"
 else
-    DURATION_DISPLAY="⏱️ $(cat_overlay)0s${RESET}"
+    DURATION_DISPLAY="⏱️ $(cat_overlay)0m${RESET}"
 fi
 
 LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} | ${COST_DISPLAY} | ${DURATION_DISPLAY}"
@@ -281,7 +279,7 @@ CONTEXT_K=$((CONTEXT_SIZE / 1000))
 
 CTX_BAR=$(generate_bar "$CONTEXT_PERCENT" 40 "context")
 CTX_END_COLOR=$(get_context_gradient_color "$CONTEXT_PERCENT")
-LINE3="🧠 ${BOLD}$(mocha_maroon)Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
+LINE3="🧠 $(mocha_maroon)Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
 
 # ============================================================================
 # Lines 4-5: Usage 5H and 7D (20 blocks)
