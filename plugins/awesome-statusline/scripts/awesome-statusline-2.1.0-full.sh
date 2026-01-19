@@ -3,7 +3,7 @@
 # Awesome Statusline - FULL (Long) Mode
 # ============================================================================
 # Line 1: 🤖 Model | 🎨 Style | ✅ Git (↑ahead ↓behind) | 🐍 Env
-# Line 2: 📂 full path 🌿(branch) | 💰 cost | ⏱️ duration
+# Line 2: 📂 full path 🌿(branch) | 💰 cost | ⏰ duration
 # Line 3: 🧠 Context bar 40 blocks - MochaMaroon→LatteMaroon(40%)→Red(80-100%)
 # Line 4: 🚀 5H Limit bar 40 blocks - Lavender→Lavender(40%)→Blue(80%)→Red(100%)
 # Line 5: 🌟 7D Limit bar 40 blocks - Yellow→Yellow(40%)→Green(80%)→Red(100%)
@@ -249,9 +249,9 @@ if [[ "$TOTAL_DURATION" != "0" && -n "$TOTAL_DURATION" ]]; then
     else
         DURATION_FMT="$((DURATION_SEC / 60))m"
     fi
-    DURATION_DISPLAY="⏱️ $(cat_subtext)${DURATION_FMT}${RESET}"
+    DURATION_DISPLAY="⏰ $(cat_subtext)${DURATION_FMT}${RESET}"
 else
-    DURATION_DISPLAY="⏱️ $(cat_overlay)0m${RESET}"
+    DURATION_DISPLAY="⏰ $(cat_overlay)0m${RESET}"
 fi
 
 LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} | ${COST_DISPLAY} | ${DURATION_DISPLAY}"
