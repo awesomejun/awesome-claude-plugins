@@ -1,44 +1,79 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
+  <img src="plugins/awesome-statusline/assets/hero.jpeg" alt="Awesome Statusline" width="100%"/>
 </p>
 
-<h1 align="center">
-  <br>
-  <pre>
-   ___                                        _____ __        __            ___
-  / _ |_    _____ ___ ___  __ _  ___   ___   / ___// /_____ _/ /___ _____ _/ (_)___  ___
- / __ | |/|/ / -_|_-&lt;/ _ \/  ' \/ -_) (_-&lt;   \__ \/ __/ __ `/ __/ // / -_) / / _ \/ -_)
-/_/ |_|__,__/\__/___/\___/_/_/_/\__/ /___/  ___/ /\__/\_,_/\__/\_,_/\__/_/_/_//_/\__/
-                                          /____/
-  </pre>
-  <br>
-</h1>
+<h1 align="center">Awesome Claude Plugins</h1>
 
 <p align="center">
-  <strong>🎨 Claude Code를 위한 아름다운 Catppuccin 테마 Statusline</strong>
+  <strong>🎨 Claude Code를 위한 아름다운 플러그인 마켓플레이스</strong>
 </p>
 
 <p align="center">
-  <a href="#-데모">데모</a> ·
-  <a href="#-빠른-설치">설치</a> ·
-  <a href="#-모드">모드</a> ·
-  <a href="#-명령어">명령어</a> ·
-  <a href="#-기능">기능</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/version-2.1.0-blue?style=flat-square" alt="Version"/>
-  <img src="https://img.shields.io/badge/Claude%20Code-Plugin-blueviolet?style=flat-square" alt="Claude Code Plugin"/>
+  <img src="https://img.shields.io/badge/Claude%20Code-Plugin%20Marketplace-blueviolet?style=flat-square" alt="Claude Code Plugin Marketplace"/>
   <img src="https://img.shields.io/badge/theme-Catppuccin%20Mocha-f5c2e7?style=flat-square" alt="Catppuccin Mocha"/>
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"/>
 </p>
 
+<p align="center">
+  <a href="#-플러그인-목록">플러그인 목록</a> ·
+  <a href="#-빠른-시작">빠른 시작</a> ·
+  <a href="#-awesome-statusline">Awesome Statusline</a> ·
+  <a href="#-마켓플레이스-명령어">마켓플레이스 명령어</a>
+</p>
+
 ---
 
-## 🎬 데모
+## 📦 플러그인 목록
+
+| 플러그인 | 버전 | 설명 |
+|---------|------|------|
+| [**Awesome Statusline**](plugins/awesome-statusline) | v2.1.0 | Catppuccin 테마 Statusline + 실시간 API 모니터링 |
+
+---
+
+## 🚀 빠른 시작
+
+### 1단계: 마켓플레이스 추가
+```bash
+/plugin marketplace add awesomejun/awesome-claude-plugins
+```
+
+### 2단계: 플러그인 설치
+```bash
+/plugin install awesome-statusline@awesome-claude-plugins
+```
+
+### 3단계: Claude Code 재시작
+```bash
+claude
+```
+
+---
+
+## 🎨 Awesome Statusline
+
+**Catppuccin 테마**가 적용된 아름다운 Statusline과 **실시간 API 사용량 모니터링**을 제공하는 플러그인입니다.
+
+### ✨ 주요 기능
+
+- 🎨 **4가지 디스플레이 모드**: Compact, Default, Full, Legacy
+- 🌈 **Catppuccin Mocha 테마**: 아름다운 4단계 그라데이션 프로그레스 바
+- 📊 **실시간 모니터링**: 모델, Git 상태, Context 사용량, API 제한 (5H/7D)
+- 🔄 **간편한 모드 전환**: `/awesome-statusline-mode` 명령어
+- 💾 **자동 백업**: 기존 statusline 자동 백업
+- 🌟 **동적 색상**: 퍼센트 숫자가 그라데이션 끝 색상과 동일하게 변화 (Bold)
+
+---
+
+## 📐 디스플레이 모드
 
 ### Full 모드 (5줄, 40블록 바)
+
 > 상세 모니터링에 적합. 비용, 시간, Git 동기화 상태까지 한눈에.
+
+<p align="center">
+  <img src="plugins/awesome-statusline/assets/demo-full.png" alt="Full Mode"/>
+</p>
 
 ```
 🤖 Claude Opus 4.5 | 🎨 learning | 📝 +2 !1 ↑3 | 🐍 base
@@ -65,7 +100,12 @@
 ---
 
 ### Default 모드 (2줄, 10블록 바)
+
 > 균형 잡힌 정보량. 일반적인 사용에 적합.
+
+<p align="center">
+  <img src="plugins/awesome-statusline/assets/demo-default.png" alt="Default Mode"/>
+</p>
 
 ```
 🤖 Claude Opus 4.5 | 🎨 learning | 📂 ~/my-project 🌿(feature/auth)✅
@@ -88,7 +128,12 @@
 ---
 
 ### Compact 모드 (2줄, 10블록 바)
+
 > 최소한의 정보. 좁은 터미널에 적합.
+
+<p align="center">
+  <img src="plugins/awesome-statusline/assets/demo-compact.png" alt="Compact Mode"/>
+</p>
 
 ```
 🤖Opus 📂~/project 🌿(main)📝
@@ -109,7 +154,12 @@
 ---
 
 ### Legacy 모드 (4줄, 클래식 디자인)
-> 1.0.0 버전의 심플한 디자인.
+
+> 1.0.2 버전의 심플한 디자인.
+
+<p align="center">
+  <img src="plugins/awesome-statusline/assets/demo-legacy.png" alt="Legacy Mode"/>
+</p>
 
 ```
 🧠 Claude Sonnet 4 | ✅ clean | 🐍 dev | 🎨 explanatory
@@ -133,60 +183,44 @@
 
 ---
 
-## 🚀 빠른 설치
+## 📊 모드 비교
 
-### 1단계: 마켓플레이스 추가
-```bash
-/plugin marketplace add awesomejun/awesome-claude-plugins
-```
-
-### 2단계: 플러그인 설치
-```bash
-/plugin install awesome-statusline@awesome-claude-plugins
-```
-
-### 3단계: Claude Code 재시작
-```bash
-claude
-```
-
-### 4단계: 설치 마법사 실행
-```bash
-/awesome-statusline-start
-```
-
-> 💡 마법사가 버전 → 모드 → 설치 방식을 안내합니다!
+| 기능 | Compact | Default | Full | Legacy |
+|------|---------|---------|------|--------|
+| 줄 수 | 2 | 2 | 5 | 4 |
+| 바 너비 | 10블록 | 10블록 | 40블록 | 40블록 |
+| 모델명 | 축약 (Opus) | 전체 (Opus 4.5) | 전체 | 전체 |
+| Output Style | ❌ | ✅ | ✅ | ✅ |
+| Git 상태 | 아이콘만 | 아이콘만 | 상세 | 심플 |
+| Git ↑↓ (ahead/behind) | ❌ | ❌ | ✅ | ❌ |
+| Conda 환경 | ❌ | ❌ | ✅ | ✅ |
+| 비용 | ❌ | ❌ | ✅ | ❌ |
+| 세션 시간 | ❌ | ❌ | ✅ | ❌ |
+| 리셋 시간 | ❌ | 축약 (1h2m) | 전체 | 축약 |
+| % Bold+그라데이션 | ❌ | ✅ | ✅ | ✅ |
 
 ---
 
-## 📊 모드
+## 🌈 그라데이션 색상
 
-| 모드 | 줄 수 | 바 크기 | 추천 용도 |
-|:----:|:-----:|:-------:|-----------|
-| **Compact** | 2줄 | 10블록 | 좁은 터미널, 최소 정보 |
-| **Default** | 2줄 | 10블록 | 일반 사용, 균형 잡힌 정보 |
-| **Full** | 5줄 | 40블록 | 상세 모니터링, 개발자용 |
-| **Legacy** | 4줄 | 40/10블록 | 클래식 디자인 선호자 |
+### 2.1.0 모드 (Compact, Default, Full)
 
-### 모드별 기능 비교
+사용량에 따라 4단계로 색상이 변화합니다:
 
-| 아이콘 | 기능 | Compact | Default | Full | Legacy |
-|:------:|------|:-------:|:-------:|:----:|:------:|
-| 🤖 | 모델명 | 축약 (Opus) | 전체 | 전체 | 전체 |
-| 🎨 | Output Style | ❌ | ✅ | ✅ | ✅ |
-| 📂 | 디렉토리 경로 | ✅ 축약 (~/) | ✅ 축약 | ✅ 전체 | ✅ 전체 |
-| 🌿 | Git 브랜치 | ✅ | ✅ | ✅ | ✅ |
-| ✅/📝 | Git 상태 (clean/dirty) | ✅ | ✅ | ✅ 상세 (+N !N ?N) | ✅ |
-| ↑↓ | Git Ahead/Behind | ❌ | ❌ | ✅ | ❌ |
-| 🐍 | Conda 환경 | ❌ | ❌ | ✅ | ✅ |
-| 💰 | 세션 비용 | ❌ | ❌ | ✅ | ❌ |
-| ⏰ | 세션 시간 | ❌ | ❌ | ✅ | ❌ |
-| 🧠 | Context 사용량 | ✅ | ✅ | ✅ (토큰 수 포함) | ✅ |
-| 🚀 | 5H API 제한 | ✅ | ✅ | ✅ | ✅ |
-| ⭐ | 7D API 제한 | ✅ | ✅ | ✅ | ✅ |
-| | 리셋 시간 형식 | ❌ | 축약 (3h42m) | 상세 (Resets in 3h42m) | 축약 |
-| | 그라데이션 바 | ✅ | ✅ | ✅ | ✅ |
-| | % 숫자 + 볼드 | ❌ | ✅ | ✅ | ✅ |
+| 바 | 0-40% | 40-80% | 80-100% |
+|-----|-------|--------|---------|
+| **Context** | Mocha Maroon | Latte Maroon | 🔴 Latte Red |
+| **5H Limit** | Mocha Lavender | Latte Blue | 🔴 Latte Red |
+| **7D Limit** | Mocha Yellow | Latte Green | 🔴 Latte Red |
+
+> ⚠️ **80% 이상이면 빨간색 경고!** 사용량 관리에 즉각적인 피드백 제공
+
+### 1.0.2 Legacy
+
+| 바 | 0-50% | 50-100% |
+|-----|-------|---------|
+| **Context** | Latte Yellow | Latte Red → Mauve |
+| **Usage (5H/7D)** | Mocha Green | Latte Teal → Blue |
 
 ---
 
@@ -200,7 +234,7 @@ claude
 | `/awesome-statusline-start compact` | Compact 모드 즉시 설치 |
 | `/awesome-statusline-start default` | Default 모드 즉시 설치 |
 | `/awesome-statusline-start full` | Full 모드 즉시 설치 |
-| `/awesome-statusline-start legacy` | Legacy 1.0.0 즉시 설치 |
+| `/awesome-statusline-start legacy` | Legacy 1.0.2 즉시 설치 |
 | `/awesome-statusline-start restore` | 백업에서 복원 |
 
 ### `/awesome-statusline-mode` — 모드 변경
@@ -216,85 +250,15 @@ claude
 
 ---
 
-## ✨ 기능
-
-### 🎨 Catppuccin Mocha 테마
-
-[Catppuccin](https://github.com/catppuccin/catppuccin)의 아름다운 Mocha 다크 테마 색상 팔레트를 적용했습니다.
-
-- **Mocha (Dark)**: 기본 배경 및 낮은 사용량 색상
-- **Latte (Light)**: 중간~높은 사용량 강조 색상
-- **동적 퍼센트 색상**: % 숫자가 그라데이션 끝 색상과 동일하게 변화 + **볼드** 처리
-
-### 🌈 4단계 그라데이션 프로그레스 바
-
-사용량에 따라 색상이 자동으로 변하는 직관적인 시각화:
-
-| 바 | 0-40% | 40-80% | 80-100% |
-|:--:|:-----:|:------:|:-------:|
-| 🧠 **Context** | Mocha Maroon | Latte Maroon | 🔴 Latte Red |
-| 🚀 **5H Limit** | Mocha Lavender | Latte Blue | 🔴 Latte Red |
-| ⭐ **7D Limit** | Mocha Yellow | Latte Green | 🔴 Latte Red |
-
-> ⚠️ **80% 이상이면 빨간색 경고!** 사용량 관리에 즉각적인 피드백 제공
-
-### 🧠 Context Window 모니터링
-
-Claude의 컨텍스트 윈도우 사용량을 실시간으로 추적:
-
-- **프로그레스 바**: 시각적으로 사용량 파악
-- **퍼센트 표시**: 정확한 사용률 (Default/Full/Legacy)
-- **토큰 수 표시**: 현재/최대 토큰 (Full 모드: `105k/200k`)
-
-### 🚀 실시간 API 사용량
-
-macOS Keychain의 OAuth 토큰을 통해 Anthropic API 사용량을 실시간 조회:
-
-| 제한 | 설명 | 리셋 시간 표시 |
-|------|------|----------------|
-| **5시간 제한** | 단기 사용량 제한 | `3h42m` 또는 `Resets in 3h42m` |
-| **7일 제한** | 주간 사용량 제한 | `Wed` 또는 `Resets Jan 21 at 2pm` |
-
-### ↑↓ Git Ahead/Behind 표시 (Full 모드)
-
-로컬 브랜치와 원격 브랜치의 동기화 상태를 한눈에 파악:
-
-| 표시 | 의미 | 권장 액션 |
-|------|------|----------|
-| `↑1` | 로컬이 1커밋 앞섬 | `git push` |
-| `↓2` | 원격이 2커밋 앞섬 | `git pull` |
-| `↑1↓2` | 양쪽 모두 변경 있음 | `git pull` → `git push` |
-
-### 📊 Git 상태 상세 표시 (Full 모드)
-
-변경 파일 수를 카테고리별로 표시:
-
-| 표시 | 의미 |
-|------|------|
-| `+3` | 3개 파일 staged |
-| `!2` | 2개 파일 modified (unstaged) |
-| `?1` | 1개 파일 untracked |
-
-### 💰 세션 비용 & ⏰ 시간 추적 (Full 모드)
-
-현재 세션의 API 비용과 경과 시간을 실시간 표시:
-
-- **세션 비용**: `💰 1.23$` — 현재 세션에서 사용한 예상 비용
-- **세션 시간**: `⏰ 12m` — 세션 시작 후 경과 시간
-
-### 💾 자동 백업 & 복원
-
-안전한 설정 관리를 위한 자동 백업 시스템:
-
-- **자동 백업**: 설치/변경 시 기존 statusline 자동 백업
-- **백업 위치**: `~/.claude/statusline-backup-{timestamp}.sh`
-- **간편 복원**: `/awesome-statusline-start restore` 또는 `/awesome-statusline-mode restore`
-
----
-
 ## 📦 마켓플레이스 명령어
 
 ```bash
+# 마켓플레이스 추가
+/plugin marketplace add awesomejun/awesome-claude-plugins
+
+# 플러그인 설치
+/plugin install awesome-statusline@awesome-claude-plugins
+
 # 플러그인 목록 보기
 /plugin marketplace list
 
