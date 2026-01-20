@@ -31,6 +31,78 @@ Claude Code의 Awesome Statusline을 설치하는 대화형 마법사입니다.
 
 ## 설정 플로우
 
+### Step 0: 의존성 자동 설치
+
+설치 시작 전에 **jq**가 설치되어 있는지 확인하고, 없으면 **자동으로 설치**합니다.
+
+```bash
+# jq 설치 확인 - 없으면 자동 설치
+if ! command -v jq &> /dev/null; then
+    echo "📦 jq 설치 중..."
+    # 플랫폼별 자동 설치
+fi
+```
+
+**플랫폼별 자동 설치 (묻지 않고 실행):**
+
+| 플랫폼 | 패키지 매니저 | 명령어 |
+|--------|---------------|--------|
+| macOS | Homebrew | `brew install jq` |
+| Windows | Chocolatey | `choco install jq -y` |
+| Windows | Scoop | `scoop install jq` |
+| Windows | winget | `winget install jqlang.jq --silent` |
+| Ubuntu/Debian | apt | `sudo apt-get install -y jq` |
+| Fedora/RHEL | dnf | `sudo dnf install -y jq` |
+| Arch Linux | pacman | `sudo pacman -S --noconfirm jq` |
+
+**자동 설치 로직:**
+
+```bash
+install_jq() {
+    echo "📦 jq가 필요합니다. 자동으로 설치합니다..."
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        if command -v brew &> /dev/null; then
+            brew install jq
+        else
+            echo "❌ Homebrew가 없습니다. https://brew.sh 에서 먼저 설치하세요."
+            return 1
+        fi
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+        # Windows (Git Bash, Cygwin, etc.)
+        if command -v choco &> /dev/null; then
+            choco install jq -y
+        elif command -v scoop &> /dev/null; then
+            scoop install jq
+        elif command -v winget &> /dev/null; then
+            winget install jqlang.jq --silent --accept-package-agreements
+        else
+            echo "❌ 패키지 매니저가 없습니다. choco, scoop, 또는 winget을 설치하세요."
+            return 1
+        fi
+    elif [[ -f /etc/debian_version ]]; then
+        sudo apt-get update && sudo apt-get install -y jq
+    elif [[ -f /etc/fedora-release ]]; then
+        sudo dnf install -y jq
+    elif [[ -f /etc/arch-release ]]; then
+        sudo pacman -S --noconfirm jq
+    else
+        echo "❌ 지원하지 않는 플랫폼입니다. jq를 수동으로 설치하세요: https://jqlang.github.io/jq/download/"
+        return 1
+    fi
+
+    echo "✅ jq 설치 완료!"
+}
+
+# jq 없으면 자동 설치
+command -v jq &> /dev/null || install_jq
+```
+
+**설치 실패 시:**
+- 에러 메시지와 수동 설치 링크 제공: https://jqlang.github.io/jq/download/
+- 설치 마법사 중단 (jq 없이는 statusline 작동 불가)
+
 ### Step 1: 버전 선택
 
 AskUserQuestion으로 물어봅니다:
@@ -213,7 +285,26 @@ Claude: 📦 백업 파일을 찾았습니다:
 
 ## 중요 사항
 
+- **jq 필수**: 설치 시 자동으로 jq 의존성 확인 및 설치 안내
 - 기존 statusline은 자동으로 백업됩니다
 - 백업 위치: `~/.claude/statusline-backup-{timestamp}.*`
 - 모드 변경은 `/awesome-statusline-mode` 사용
 - Claude Code 재시작 후 적용됩니다
+
+## 문제 해결
+
+### 모델명/디렉토리가 안 보이는 경우
+```bash
+# jq 설치 확인
+which jq && jq --version
+
+# 없으면 설치
+brew install jq           # macOS
+choco install jq -y       # Windows (Chocolatey)
+scoop install jq          # Windows (Scoop)
+winget install jqlang.jq  # Windows (winget)
+sudo apt install jq       # Ubuntu/Debian
+```
+
+### Limit이 N/A로 표시되는 경우
+OAuth 토큰이 없는 경우입니다. API 키 사용자는 Limit 정보를 볼 수 없습니다.
