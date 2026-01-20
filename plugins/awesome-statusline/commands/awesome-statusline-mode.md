@@ -24,11 +24,12 @@ Awesome Statusline의 모드를 변경합니다.
 | **default** | 2줄 | 10블록 | 균형잡힌 정보, 대부분의 사용자에게 권장 |
 | **full** | 5줄 | 40블록 | 상세 정보 (비용, 시간, Git ahead/behind, 토큰 수) |
 
-### 1.0.2 Legacy
+### Legacy 모드
 
 | 모드 | 줄 수 | 바 크기 | 설명 |
 |------|-------|---------|------|
-| **legacy** | 4줄 | 40/10블록 | 클래식 디자인, 2단계 그라데이션 |
+| **legacy-2.0.0** | 5줄 | 20블록 | 비용, 시간, 토큰 수 표시 |
+| **legacy-1.0.2** | 4줄 | 40블록 | 클래식 디자인 |
 
 ## 인자 처리
 
@@ -38,18 +39,21 @@ Awesome Statusline의 모드를 변경합니다.
 | `compact` | 2.1.0 Compact 모드로 변경 |
 | `default` | 2.1.0 Default 모드로 변경 |
 | `full` | 2.1.0 Full 모드로 변경 |
-| `legacy` 또는 `1.0.2` | 1.0.2 Legacy 모드로 변경 |
+| `legacy` | 대화형 Legacy 버전 선택 |
+| `legacy-2.0.0` 또는 `2.0.0` | 2.0.0 Legacy 모드로 변경 |
+| `legacy-1.0.2` 또는 `1.0.2` | 1.0.2 Legacy 모드로 변경 |
 | `restore` | 가장 최근 백업에서 복원 |
 
 ## 사용법
 
 ### 인자로 직접 지정
 ```
-/awesome-statusline-mode compact   # Compact 모드로 변경
-/awesome-statusline-mode default   # Default 모드로 변경
-/awesome-statusline-mode full      # Full 모드로 변경
-/awesome-statusline-mode legacy    # 1.0.2 Legacy로 변경
-/awesome-statusline-mode restore   # 백업에서 복원
+/awesome-statusline-mode compact      # Compact 모드로 변경
+/awesome-statusline-mode default      # Default 모드로 변경
+/awesome-statusline-mode full         # Full 모드로 변경
+/awesome-statusline-mode legacy-2.0.0 # 2.0.0 Legacy로 변경
+/awesome-statusline-mode legacy-1.0.2 # 1.0.2 Legacy로 변경
+/awesome-statusline-mode restore      # 백업에서 복원
 ```
 
 ### 대화형 선택
@@ -68,7 +72,8 @@ Awesome Statusline의 모드를 변경합니다.
 | `compact` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-compact.sh` |
 | `default` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-default.sh` |
 | `full` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-full.sh` |
-| `legacy` / `1.0.2` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh` |
+| `legacy-2.0.0` / `2.0.0` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.0.0-legacy.sh` |
+| `legacy-1.0.2` / `1.0.2` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh` |
 
 실행 권한 부여 후 완료 메시지 표시.
 
@@ -82,6 +87,7 @@ AskUserQuestion으로 모드 선택:
 [Compact] - 2줄, 10블록 바, 최소 정보
 [Default (Recommended)] - 2줄, 10블록 바, 균형잡힌 정보
 [Full] - 5줄, 40블록 바, 상세 정보
+[Legacy 2.0.0] - 5줄, 20블록 바, 비용/시간 표시
 [Legacy 1.0.2] - 4줄, 클래식 디자인
 ```
 
@@ -149,7 +155,7 @@ Claude: ✅ Statusline 모드가 **Legacy 1.0.2**로 변경되었습니다!
 
 Claude: 어떤 Statusline 모드를 사용하시겠습니까?
 
-        [Compact] [Default (Recommended)] [Full] [Legacy 1.0.2]
+        [Compact] [Default (Recommended)] [Full] [Legacy 2.0.0] [Legacy 1.0.2]
 
 사용자: Full
 

@@ -19,7 +19,8 @@ Claude Code의 Awesome Statusline을 설치하는 대화형 마법사입니다.
 | 버전 | 모드 | 설명 |
 |------|------|------|
 | **2.1.0** (최신) | Compact / Default / Full | 3-mode 시스템, 4단계 그라데이션 |
-| **1.0.2** (Legacy) | Single | 기존 단일 모드, 클래식 디자인 |
+| **2.0.0** (Legacy) | Single | 5줄 20블록, 비용/시간 표시 |
+| **1.0.2** (Legacy) | Single | 4줄 클래식 디자인 |
 
 ## 2.1.0 모드 상세
 
@@ -28,6 +29,13 @@ Claude Code의 Awesome Statusline을 설치하는 대화형 마법사입니다.
 | **Compact** | 2줄 | 10블록 | 최소 정보, 좁은 터미널용 |
 | **Default** | 2줄 | 10블록 | 균형잡힌 정보, 대부분의 사용자에게 권장 |
 | **Full** | 5줄 | 40블록 | 상세 정보 (비용, 시간, Git ahead/behind, 토큰 수) |
+
+## Legacy 모드 상세
+
+| 모드 | 줄 수 | 바 크기 | 설명 |
+|------|-------|---------|------|
+| **Legacy 2.0.0** | 5줄 | 20블록 | 비용, 시간, 토큰 수 표시 (ahead/behind 없음) |
+| **Legacy 1.0.2** | 4줄 | 40블록 | 오리지널 클래식 디자인 |
 
 ## 설정 플로우
 
@@ -133,10 +141,19 @@ AskUserQuestion으로 물어봅니다:
 [커스터마이즈] - 색상, 표시 정보 등 커스텀 설정
 ```
 
-### Step 2c: 1.0.2 Legacy 선택 시
+### Step 2c: Legacy 선택 시
 
-바로 Legacy 스크립트 설치:
-- `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh`를 `~/.claude/awesome-statusline.sh`로 복사
+Legacy 버전 선택 대화:
+```
+어떤 Legacy 버전을 설치하시겠습니까?
+
+[2.0.0] - 5줄, 20블록 바, 비용/시간 표시
+[1.0.2] - 4줄, 40블록 바, 클래식 디자인
+```
+
+Legacy 스크립트 설치:
+- 2.0.0: `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.0.0-legacy.sh`
+- 1.0.2: `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh`
 
 ## 처리 로직
 
@@ -148,7 +165,9 @@ AskUserQuestion으로 물어봅니다:
 | `compact` | 2.1.0 Compact 모드 바로 설치 |
 | `default` | 2.1.0 Default 모드 바로 설치 |
 | `full` | 2.1.0 Full 모드 바로 설치 |
-| `legacy` 또는 `1.0.2` | 1.0.2 Legacy 바로 설치 |
+| `legacy` | 대화형 Legacy 버전 선택 |
+| `legacy-2.0.0` 또는 `2.0.0` | 2.0.0 Legacy 바로 설치 |
+| `legacy-1.0.2` 또는 `1.0.2` | 1.0.2 Legacy 바로 설치 |
 | `restore` | 가장 최근 백업에서 복원 |
 
 ### 설치 경로
@@ -158,8 +177,9 @@ AskUserQuestion으로 물어봅니다:
 - Default: `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-default.sh`
 - Full: `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-full.sh`
 
-**1.0.2 Legacy:**
-- `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh`
+**Legacy 버전:**
+- 2.0.0: `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.0.0-legacy.sh`
+- 1.0.2: `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh`
 
 모든 버전은 `~/.claude/awesome-statusline.sh`로 복사됩니다.
 
